@@ -7,9 +7,10 @@ Somos el grupo 10 conformado por:
 
 2. Diego Gómez
 
-La temática es un Sistema de reservas de mesas pensando en un restorán de comida italiana. También, planeamos agregar el menú.
+La temática es un Sistema de reservas de mesas pensando en un restorán de comida italiana. Además, planeamos añadir un menú visible, con imagenes, precios, descripción, etc.
 
 Roles:
+
 Tomás Poblete: Desarrollador/Integrador
 
 Diego Gómez: Diseñador/Integrador
