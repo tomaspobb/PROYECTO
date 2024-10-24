@@ -7,7 +7,7 @@ Somos el grupo 10 conformado por:
 
 2. Diego Gómez
 
-La temática es un Sistema de reservas de mesas pensando en un restorán de comida italiana. Además, planeamos añadir un menú visible, con imagenes, precios, descripción, etc.
+La temática es un sistema de reservas de mesa intuitivo con selección visual del espacio y horario, complementado con un menú digital detallado que incluye imágenes profesionales y especificaciones de cada plato italiano.
 
 Roles:
 
