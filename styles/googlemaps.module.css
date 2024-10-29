@@ -1,0 +1,9 @@
+/* styles/GoogleMaps.module.css */
+.mapContainer {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden; /* Para bordes redondeados */
+}
