@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import LanguageSelector from './LanguageSelector';
 
 const NavBar = () => {
   const router = useRouter();
@@ -53,6 +54,10 @@ const NavBar = () => {
               </li>
             )}
           </ul>
+          {/* Selector de idioma */}
+          <div className="d-flex align-items-center ms-3">
+            <LanguageSelector />
+          </div>
         </div>
       </div>
     </nav>

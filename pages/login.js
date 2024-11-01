@@ -35,31 +35,6 @@ const LoginPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Navbar Oscura */}
-      <header className="bg-dark">
-        <nav className="navbar navbar-expand-lg navbar-dark container-fluid">
-          <div className="container">
-            <Link href="/" className="navbar-brand fw-bold text-uppercase">Sapori di Italia</Link>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav ms-auto">
-                <li className="nav-item">
-                  <Link href="/" className="nav-link">Inicio</Link>
-                </li>
-                <li className="nav-item">
-                  <Link href="/menu" className="nav-link">Menú</Link>
-                </li>
-                <li className="nav-item">
-                  <Link href="/contacto" className="nav-link">Contacto</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </header>
-
       {/* Formulario de Inicio de Sesión */}
       <main className="d-flex justify-content-center align-items-center vh-100">
         <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>

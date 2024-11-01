@@ -1,0 +1,14 @@
+{
+  "restaurantName": "Sapori di Italia",
+  "home": "Inicio",
+  "menu": "Menú",
+  "reservations": "Reservas",
+  "contact": "Contacto",
+  "contactDescription": "Contacto de Sapori di Italia",
+  "contactPrompt": "Si tienes alguna pregunta o comentario, no dudes en contactarnos.",
+  "phone": "Teléfono",
+  "email": "Correo Electrónico",
+  "address": "Dirección",
+  "location": "Ubicación",
+  "allRightsReserved": "Todos los derechos reservados."
+}
