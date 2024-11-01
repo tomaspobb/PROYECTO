@@ -1,48 +1,57 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+});
+
 const Home = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   const testimonials = [
     {
-      text: "La carbonara es la mejor que he probado. ¡Altamente recomendada!",
-      rating: "⭐⭐⭐⭐⭐",
-      image: "/images/carbonara.jpg"
+      text: t('carbonaraTestimonial'),
+      rating: '⭐⭐⭐⭐⭐',
+      image: '/images/carbonara.jpg',
     },
     {
-      text: "La bruschetta es fresca y deliciosa. Perfecta para empezar la cena.",
-      rating: "⭐⭐⭐⭐",
-      image: "/images/bruschetta.jpg"
+      text: t('bruschettaTestimonial'),
+      rating: '⭐⭐⭐⭐',
+      image: '/images/bruschetta.jpg',
     },
     {
-      text: "La ensalada caprese es un must. Me encantó cada bocado.",
-      rating: "⭐⭐⭐⭐⭐",
-      image: "/images/ensalada-caprese.jpg"
-    }
+      text: t('capreseTestimonial'),
+      rating: '⭐⭐⭐⭐⭐',
+      image: '/images/ensalada-caprese.jpg',
+    },
   ];
 
   const galleryDishes = [
     {
-      name: "Carbonara",
-      image: "/images/carbonara.jpg",
-      description: "Una clásica pasta Carbonara, con la cremosidad perfecta."
+      name: t('carbonara'),
+      image: '/images/carbonara.jpg',
+      description: t('carbonaraDescription'),
     },
     {
-      name: "Bruschetta",
-      image: "/images/bruschetta.jpg",
-      description: "Fresca Bruschetta con tomate, albahaca y pan crujiente."
+      name: t('bruschetta'),
+      image: '/images/bruschetta.jpg',
+      description: t('bruschettaDescription'),
     },
     {
-      name: "Pizza Margarita",
-      image: "/images/pizza-margarita.jpg",
-      description: "Pizza Margarita con albahaca fresca y mozzarella."
+      name: t('margaritaPizza'),
+      image: '/images/pizza-margarita.jpg',
+      description: t('margaritaPizzaDescription'),
     },
   ];
 
@@ -55,7 +64,7 @@ const Home = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [testimonials]);
 
   const handleReservationClick = () => {
     if (isAuthenticated) {
@@ -68,14 +77,14 @@ const Home = () => {
   return (
     <div>
       <Head>
-        <title>Restaurante Sapori di Italia</title>
-        <meta name="description" content="Bienvenido al Restaurante Sapori di Italia" />
+        <title>{t('restaurantName')}</title>
+        <meta name="description" content={t('homeDescription')} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={`container py-5 ${styles.main}`}>
         <section id="testimonios" className="text-center">
-          <h2 className="mb-4" style={{ color: 'var(--primary-color)' }}>Testimonios</h2>
+          <h2 className="mb-4" style={{ color: 'var(--primary-color)' }}>{t('testimonialSection')}</h2>
           <div className="card mb-3 mx-auto" style={{ maxWidth: '540px' }}>
             <div className="row g-0">
               <div className="col-md-4">
@@ -98,7 +107,7 @@ const Home = () => {
         </section>
 
         <section id="galeria" className="text-center mt-5">
-          <h2 className="mb-4" style={{ color: 'var(--primary-color)' }}>Galería de Sabores</h2>
+          <h2 className="mb-4" style={{ color: 'var(--primary-color)' }}>{t('dishGallery')}</h2>
           <div className="row">
             {galleryDishes.map((dish, index) => (
               <div className="col-md-4 mb-4" key={index}>
@@ -109,7 +118,7 @@ const Home = () => {
                     className="card-img-top"
                     width={500}
                     height={300}
-                    style={{ objectFit: "cover", height: "200px" }}
+                    style={{ objectFit: 'cover', height: '200px' }}
                   />
                   <div className="card-body">
                     <h5 className="card-title" style={{ color: 'var(--primary-color)' }}>{dish.name}</h5>
@@ -122,15 +131,15 @@ const Home = () => {
         </section>
 
         <div id="registro" className="section text-center mt-5">
-          <h2 className="mb-4">¡Ven a disfrutar una experiencia italiana increíble!</h2>
+          <h2 className="mb-4">{t('enjoyExperience')}</h2>
           <button onClick={handleReservationClick} className="btn btn-primary">
-            Reserva tu mesa
+            {t('reserveTable')}
           </button>
         </div>
       </main>
 
       <footer className="text-center py-4 bg-dark text-light">
-        <p>© {new Date().getFullYear()} Restaurante Sapori di Italia. Todos los derechos reservados.</p>
+        <p>© {new Date().getFullYear()} {t('restaurantName')}. {t('allRightsReserved')}</p>
       </footer>
     </div>
   );
