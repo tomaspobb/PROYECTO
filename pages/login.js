@@ -1,28 +1,72 @@
 // pages/login.js
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import bcrypt from 'bcryptjs';
 
-export default function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const router = useRouter();
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const router = useRouter();
+  const { redirect } = router.query; // Captura el parámetro de redirección
 
-    const handleLogin = () => {
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        if (storedUser && storedUser.username === username && storedUser.password === btoa(password)) {
-            localStorage.setItem('isAuthenticated', true);
-            router.push('/reservas');
-        } else {
-            alert('Usuario o contraseña incorrectos');
-        }
-    };
+  const authenticateUser = async (username, password) => {
+    // Obtener usuarios de localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || {};
 
-    return (
-        <div>
-            <h2>Iniciar Sesión</h2>
-            <input type="text" placeholder="Nombre de usuario" onChange={(e) => setUsername(e.target.value)} />
-            <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Iniciar Sesión</button>
-        </div>
-    );
-}
+    // Verificar si el usuario existe
+    if (!users[username]) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    // Comparar contraseña cifrada
+    const isPasswordValid = await bcrypt.compare(password, users[username]);
+    if (!isPasswordValid) {
+      throw new Error('Contraseña incorrecta');
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    try {
+      await authenticateUser(username, password);
+      localStorage.setItem('isAuthenticated', 'true'); // Establecer autenticación
+      router.push(`/${redirect || ''}`); // Redirigir a reservas o a la página principal
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div>
+      <h2>Iniciar Sesión</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Nombre de Usuario:
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Contraseña:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+    </div>
+  );
+};
+
+export default Login;

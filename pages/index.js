@@ -95,7 +95,7 @@ const Home = () => {
                 {/* Sección Botón de Registro */}
                 <div id="registro" className="section text-center mt-5">
                     <h2 className="mb-4">¡Únete a nosotros!</h2>
-                    <Link href="/registro">
+                    <Link href="/register">
                         <button className="btn btn-primary">Regístrate como Usuario</button>
                     </Link>
                 </div>
