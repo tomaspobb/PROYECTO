@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import styles from '../styles/NavBar.module.css';
 
 const NavBar = () => {
   const router = useRouter();
@@ -14,33 +13,25 @@ const NavBar = () => {
   }, []);
 
   const handleLogout = () => {
-    // Eliminar autenticación y redirigir al usuario
     localStorage.removeItem('isAuthenticated');
     setIsAuthenticated(false);
-    router.push('/'); // Redirigir a la página principal después de cerrar sesión
-  };
-
-  const handleReservationsClick = (e) => {
-    e.preventDefault();
-    if (isAuthenticated) {
-      router.push('/reservas');
-    } else {
-      router.push({
-        pathname: '/login',
-        query: { redirect: 'reservas' },
-      });
-    }
+    router.push('/');
   };
 
   return (
-    <nav className={`navbar navbar-expand-lg navbar-light bg-light ${styles.navbar}`}>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container">
-        <Link href="/" className="navbar-brand">Nombre del Restaurante</Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        {/* Logo o Nombre del Restaurante */}
+        <Link href="/" className="navbar-brand fw-bold text-uppercase">
+          Sapori di Italia
+        </Link>
+
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
+
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ml-auto">
+          <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <Link href="/" className="nav-link">Inicio</Link>
             </li>
@@ -48,16 +39,17 @@ const NavBar = () => {
               <Link href="/menu" className="nav-link">Menú</Link>
             </li>
             <li className="nav-item">
-              <a href="/reservas" className="nav-link" onClick={handleReservationsClick}>Reservas</a>
-            </li>
-            <li className="nav-item">
               <Link href="/contacto" className="nav-link">Contacto</Link>
             </li>
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <li className="nav-item">
-                <button className="nav-link btn btn-link" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                <button className="nav-link btn btn-link text-warning" onClick={handleLogout} style={{ cursor: 'pointer' }}>
                   Cerrar Sesión
                 </button>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link href="/login" className="nav-link text-info">Iniciar Sesión</Link>
               </li>
             )}
           </ul>

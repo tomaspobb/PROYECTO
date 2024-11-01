@@ -1,7 +1,7 @@
 // pages/register.js
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import bcrypt from 'bcryptjs'; // bcryptjs puede usarse en el cliente
+import bcrypt from 'bcryptjs';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -23,8 +23,8 @@ const Register = () => {
     // Cifrar la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Almacenar usuario en localStorage
-    users[username] = hashedPassword;
+    // Almacenar usuario en localStorage con la contraseña cifrada
+    users[username] = { password: hashedPassword };
     localStorage.setItem('users', JSON.stringify(users));
   };
 
@@ -44,33 +44,35 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Registro de Usuario</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Nombre de Usuario:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Contraseña:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <button type="submit">Registrarse</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>Usuario registrado exitosamente.</p>}
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
+        <h2 className="text-center mb-4">Registro de Usuario</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Nombre de Usuario</label>
+            <input
+              type="text"
+              className="form-control"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Contraseña</label>
+            <input
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100 mb-3">Registrarse</button>
+        </form>
+        {error && <p className="text-danger text-center">{error}</p>}
+        {success && <p className="text-success text-center">Usuario registrado exitosamente.</p>}
+      </div>
     </div>
   );
 };

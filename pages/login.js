@@ -1,72 +1,69 @@
-// pages/login.js
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import bcrypt from 'bcryptjs';
 
-const Login = () => {
+const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
   const router = useRouter();
-  const { redirect } = router.query; // Captura el parámetro de redirección
 
-  const authenticateUser = async (username, password) => {
-    // Obtener usuarios de localStorage
-    const users = JSON.parse(localStorage.getItem('users')) || {};
-
-    // Verificar si el usuario existe
-    if (!users[username]) {
-      throw new Error('Usuario no encontrado');
-    }
-
-    // Comparar contraseña cifrada
-    const isPasswordValid = await bcrypt.compare(password, users[username]);
-    if (!isPasswordValid) {
-      throw new Error('Contraseña incorrecta');
-    }
-  };
-
-  const handleSubmit = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    setError(null);
-    try {
-      await authenticateUser(username, password);
-      localStorage.setItem('isAuthenticated', 'true'); // Establecer autenticación
-      router.push(`/${redirect || ''}`); // Redirigir a reservas o a la página principal
-    } catch (err) {
-      setError(err.message);
+
+    // Obtener usuarios de localStorage y verificar que se recuperan correctamente
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+    console.log("Usuarios almacenados:", users); // Confirmar que los usuarios están en localStorage
+
+    const storedUser = users[username];
+    console.log("Usuario encontrado:", storedUser); // Confirmar que se encuentra el usuario
+
+    // Verificar si el usuario existe y la contraseña coincide
+    if (storedUser && storedUser.password && bcrypt.compareSync(password, storedUser.password)) {
+      localStorage.setItem('isAuthenticated', 'true');
+      alert('Inicio de sesión exitoso.');
+      router.push('/reservas');
+    } else {
+      alert('Credenciales incorrectas, por favor intenta de nuevo.');
     }
   };
 
   return (
-    <div>
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Nombre de Usuario:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Contraseña:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <button type="submit">Iniciar Sesión</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
+        <h3 className="text-center mb-4">Iniciar Sesión</h3>
+        <form onSubmit={handleLogin}>
+          <div className="mb-3">
+            <label className="form-label">Nombre de Usuario</label>
+            <input
+              type="text"
+              className="form-control"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Contraseña</label>
+            <input
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
+        </form>
+        <p className="text-center">
+          ¿No tienes cuenta?{' '}
+          <Link href="/register" legacyBehavior>
+            <a className="text-info">Regístrate aquí</a>
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };
 
-export default Login;
+export default LoginPage;
