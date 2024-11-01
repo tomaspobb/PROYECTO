@@ -29,6 +29,24 @@ const Home = () => {
     }
   ];
 
+  const galleryDishes = [
+    {
+      name: "Carbonara",
+      image: "/images/carbonara.jpg",
+      description: "Una clásica pasta Carbonara, con la cremosidad perfecta."
+    },
+    {
+      name: "Bruschetta",
+      image: "/images/bruschetta.jpg",
+      description: "Fresca Bruschetta con tomate, albahaca y pan crujiente."
+    },
+    {
+      name: "Pizza Margarita",
+      image: "/images/pizza-margarita.jpg",
+      description: "Pizza Margarita con albahaca fresca y mozzarella."
+    },
+  ];
+
   useEffect(() => {
     const authStatus = localStorage.getItem('isAuthenticated');
     setIsAuthenticated(authStatus === 'true');
@@ -119,25 +137,37 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Sección de Galería de Sabores */}
+        <section id="galeria" className="text-center mt-5">
+          <h2 className="mb-4">Galería de Sabores</h2>
+          <div className="row">
+            {galleryDishes.map((dish, index) => (
+              <div className="col-md-4 mb-4" key={index}>
+                <div className="card shadow h-100">
+                  <Image
+                    src={dish.image}
+                    alt={dish.name}
+                    className="card-img-top"
+                    width={500}
+                    height={300}
+                    style={{ objectFit: "cover", height: "200px" }}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{dish.name}</h5>
+                    <p className="card-text">{dish.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Sección del botón de registro o reservas */}
         <div id="registro" className="section text-center mt-5">
           <h2 className="mb-4">¡Ven a disfrutar una experiencia italiana increíble!</h2>
           <button onClick={handleReservationClick} className="btn btn-success">
             Reserva tu mesa
           </button>
-        </div>
-
-        {/* Sección de ubicación */}
-        <div className="text-center mt-5">
-          <h2 className="mb-4">Ubicación</h2>
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.168158691163!2d-70.6353736847415!3d-33.4557169808447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c6ee2e00c96d%3A0xc706c65868e3178a!2sRestaurante%20Sapori%20di%20Italia!5e0!3m2!1ses-419!2scl!4v1698530509922!5m2!1ses-419!2scl" 
-            width="100%" 
-            height="450" 
-            style={{ border: 0 }} 
-            allowFullScreen="" 
-            loading="lazy">
-          </iframe>
         </div>
       </main>
 
@@ -149,3 +179,4 @@ const Home = () => {
 };
 
 export default Home;
+
