@@ -40,15 +40,15 @@ const Contacto = () => {
             </header>
 
             <main className="container py-5">
-                <h1 className="text-center mb-5">Contacto</h1>
+                <h1 className="text-center mb-5" style={{ color: 'var(--primary-color)' }}>Contacto</h1>
                 <p className="text-center mb-4">Si tienes alguna pregunta o comentario, no dudes en contactarnos.</p>
 
+                {/* Información de Contacto */}
                 <div className="row justify-content-center">
-                    {/* Información de Contacto */}
                     <div className="col-md-6 col-lg-4">
                         <div className="card text-center shadow mb-4">
                             <div className="card-body">
-                                <h5 className="card-title">Teléfono</h5>
+                                <h5 className="card-title" style={{ color: 'var(--primary-color)' }}>Teléfono</h5>
                                 <p className="card-text">+56 9 1234 5678</p>
                             </div>
                         </div>
@@ -56,7 +56,7 @@ const Contacto = () => {
                     <div className="col-md-6 col-lg-4">
                         <div className="card text-center shadow mb-4">
                             <div className="card-body">
-                                <h5 className="card-title">Email</h5>
+                                <h5 className="card-title" style={{ color: 'var(--primary-color)' }}>Email</h5>
                                 <p className="card-text">contacto@saporidiitalia.cl</p>
                             </div>
                         </div>
@@ -64,7 +64,7 @@ const Contacto = () => {
                     <div className="col-md-6 col-lg-4">
                         <div className="card text-center shadow mb-4">
                             <div className="card-body">
-                                <h5 className="card-title">Dirección</h5>
+                                <h5 className="card-title" style={{ color: 'var(--primary-color)' }}>Dirección</h5>
                                 <p className="card-text">Av. Italia 1234, Santiago, Chile</p>
                             </div>
                         </div>
@@ -73,7 +73,7 @@ const Contacto = () => {
 
                 {/* Mapa */}
                 <div className="text-center mt-5">
-                    <h2 className="mb-4">Ubicación</h2>
+                    <h2 className="mb-4" style={{ color: 'var(--primary-color)' }}>Ubicación</h2>
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.168158691163!2d-70.6353736847415!3d-33.4557169808447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c6ee2e00c96d%3A0xc706c65868e3178a!2sRestaurante%20Sapori%20di%20Italia!5e0!3m2!1ses-419!2scl!4v1698530509922!5m2!1ses-419!2scl"
                         width="100%"

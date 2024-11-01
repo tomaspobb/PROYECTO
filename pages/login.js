@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Link from 'next/link';
 import bcrypt from 'bcryptjs';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -13,10 +15,7 @@ const LoginPage = () => {
 
     // Obtener usuarios de localStorage y verificar que se recuperan correctamente
     const users = JSON.parse(localStorage.getItem('users')) || {};
-    console.log("Usuarios almacenados:", users); // Confirmar que los usuarios están en localStorage
-
     const storedUser = users[username];
-    console.log("Usuario encontrado:", storedUser); // Confirmar que se encuentra el usuario
 
     // Verificar si el usuario existe y la contraseña coincide
     if (storedUser && storedUser.password && bcrypt.compareSync(password, storedUser.password)) {
@@ -29,39 +28,78 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
-        <h3 className="text-center mb-4">Iniciar Sesión</h3>
-        <form onSubmit={handleLogin}>
-          <div className="mb-3">
-            <label className="form-label">Nombre de Usuario</label>
-            <input
-              type="text"
-              className="form-control"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
+    <div>
+      <Head>
+        <title>Iniciar Sesión - Sapori di Italia</title>
+        <meta name="description" content="Inicia sesión en Sapori di Italia" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      {/* Navbar Oscura */}
+      <header className="bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark container-fluid">
+          <div className="container">
+            <Link href="/" className="navbar-brand fw-bold text-uppercase">Sapori di Italia</Link>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                  <Link href="/" className="nav-link">Inicio</Link>
+                </li>
+                <li className="nav-item">
+                  <Link href="/menu" className="nav-link">Menú</Link>
+                </li>
+                <li className="nav-item">
+                  <Link href="/contacto" className="nav-link">Contacto</Link>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="mb-3">
-            <label className="form-label">Contraseña</label>
-            <input
-              type="password"
-              className="form-control"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
-        </form>
-        <p className="text-center">
-          ¿No tienes cuenta?{' '}
-          <Link href="/register" legacyBehavior>
-            <a className="text-info">Regístrate aquí</a>
-          </Link>
-        </p>
-      </div>
+        </nav>
+      </header>
+
+      {/* Formulario de Inicio de Sesión */}
+      <main className="d-flex justify-content-center align-items-center vh-100">
+        <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
+          <h3 className="text-center mb-4" style={{ color: 'var(--primary-color)' }}>Iniciar Sesión</h3>
+          <form onSubmit={handleLogin}>
+            <div className="mb-3">
+              <label className="form-label">Nombre de Usuario</label>
+              <input
+                type="text"
+                className="form-control"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Contraseña</label>
+              <input
+                type="password"
+                className="form-control"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
+          </form>
+          <p className="text-center">
+            ¿No tienes cuenta?{' '}
+            <Link href="/register" legacyBehavior>
+              <a className="text-info">Regístrate aquí</a>
+            </Link>
+          </p>
+        </div>
+      </main>
+
+      {/* Footer Oscuro */}
+      <footer className="text-center py-4 bg-dark text-light">
+        <p>© {new Date().getFullYear()} Sapori di Italia. Todos los derechos reservados.</p>
+      </footer>
     </div>
   );
 };

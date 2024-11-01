@@ -96,11 +96,11 @@ const Menu = () => {
             </header>
 
             <main className="container py-5">
-                <h1 className="text-center mb-5">Nuestro Menú</h1>
+                <h1 className="text-center mb-5" style={{ color: 'var(--primary-color)' }}>Nuestro Menú</h1>
 
                 {Object.keys(dishes).map((category, index) => (
                     <div id={category} className="mb-5" key={index}>
-                        <h2 className="text-center text-capitalize mb-4">{category}</h2>
+                        <h2 className="text-center text-capitalize mb-4" style={{ color: 'var(--primary-color)' }}>{category}</h2>
                         <div className="row justify-content-center">
                             {dishes[category].map((dish, idx) => (
                                 <div className="col-md-4 mb-4" key={idx}>
@@ -114,7 +114,7 @@ const Menu = () => {
                                             style={{ objectFit: "cover", height: "200px" }}
                                         />
                                         <div className="card-body d-flex flex-column">
-                                            <h5 className="card-title text-center">{dish.name}</h5>
+                                            <h5 className="card-title text-center" style={{ color: 'var(--primary-color)' }}>{dish.name}</h5>
                                             <p className="card-text text-center">{dish.description}</p>
                                             <p className="card-text text-center"><strong>{dish.price}</strong></p>
                                         </div>
@@ -126,6 +126,7 @@ const Menu = () => {
                 ))}
             </main>
 
+            {/* Footer Oscuro */}
             <footer className="text-center py-4 bg-dark text-light">
                 <p>© {new Date().getFullYear()} Sapori di Italia. Todos los derechos reservados.</p>
             </footer>
