@@ -171,7 +171,8 @@ const Home = () => {
         </div>
       </main>
 
-      <footer className={styles.footer}>
+      {/* Footer Oscuro */}
+      <footer className="text-center py-4 bg-dark text-light">
         <p>© {new Date().getFullYear()} Restaurante Sapori di Italia. Todos los derechos reservados.</p>
       </footer>
     </div>
