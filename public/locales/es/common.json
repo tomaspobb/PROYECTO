@@ -73,6 +73,9 @@
     { "label": "22:00", "value": "22:00" },
     { "label": "23:00", "value": "23:00" }
   ],
-  "tableAlreadyReserved": "Esta mesa ya está reservada a esa hora."
+  "tableAlreadyReserved": "Esta mesa ya está reservada a esa hora.",
+  "openingHours": "Horario de Atención",
+  "mondayToFriday": "De lunes a viernes",
+  "reserveForToday": "Reserva para Hoy"
 }
 

@@ -82,6 +82,7 @@ const Reservas = () => {
         
         <h1>{t('reservationTitle')}</h1>
         <p>{t('reservationPrompt')}</p>
+        <h3>{t('reserveForToday')}</h3> {/* Nueva línea para indicar que es por día */}
 
         <div className="d-flex justify-content-center mt-4">
           <select 
@@ -112,7 +113,7 @@ const Reservas = () => {
         
         {selectedTable && selectedTime && (
           <button onClick={confirmReservation} className="btn btn-primary mt-3">
-            {t('confirmReservation')} {selectedTable} {selectedTime}
+            Confirmar Reserva
           </button>
         )}
       </div>

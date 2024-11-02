@@ -73,6 +73,9 @@
     { "label": "22:00", "value": "22:00" },
     { "label": "23:00", "value": "23:00" }
   ],
-  "tableAlreadyReserved": "This table is already reserved at this time."
+  "tableAlreadyReserved": "This table is already reserved at this time.",
+  "openingHours": "Opening Hours",
+  "mondayToFriday": "Monday to Friday",
+  "reserveForToday": "Reserve for Today"
 }
 
