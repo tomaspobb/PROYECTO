@@ -18,14 +18,35 @@ const Reservas = () => {
   const [selectedTable, setSelectedTable] = useState(null);
   const [selectedTime, setSelectedTime] = useState('');
   const [reservedTables, setReservedTables] = useState([]);
+  const [availableTimeOptions, setAvailableTimeOptions] = useState([]);
   const tables = Array.from({ length: 5 * 5 }, (_, i) => i + 1);
-  const timeOptions = t('timeOptions', { returnObjects: true });
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
     if (!isAuthenticated) {
       router.push('/login');
+      return;
     }
+
+    // Set available times based on current hour in Chile timezone
+    const chileTime = new Date().toLocaleString('en-US', { timeZone: 'America/Santiago' });
+    const currentHour = new Date(chileTime).getHours();
+    const options = [
+      { label: "13:00", value: "13:00" },
+      { label: "14:00", value: "14:00" },
+      { label: "15:00", value: "15:00" },
+      { label: "16:00", value: "16:00" },
+      { label: "17:00", value: "17:00" },
+      { label: "18:00", value: "18:00" },
+      { label: "19:00", value: "19:00" },
+      { label: "20:00", value: "20:00" },
+      { label: "21:00", value: "21:00" },
+      { label: "22:00", value: "22:00" },
+      { label: "23:00", value: "23:00" }
+    ].filter(option => parseInt(option.value) > currentHour);
+
+    setAvailableTimeOptions(options);
+
     const fetchReservedTables = async () => {
       try {
         const response = await axios.get('/api/reservas');
@@ -43,7 +64,8 @@ const Reservas = () => {
   };
 
   const confirmReservation = async () => {
-    if (selectedTable && selectedTime) {
+    const userId = localStorage.getItem('userId'); // Obtén el ID del usuario autenticado
+    if (selectedTable && selectedTime && userId) {
       try {
         const isTableReserved = reservedTables.some(
           reservation => reservation.table === selectedTable && reservation.time === selectedTime
@@ -54,8 +76,8 @@ const Reservas = () => {
           return;
         }
 
-        await axios.post('/api/reservas', { table: selectedTable, time: selectedTime });
-        setReservedTables([...reservedTables, { table: selectedTable, time: selectedTime }]);
+        await axios.post('/api/reservas', { table: selectedTable, time: selectedTime, userId });
+        setReservedTables([...reservedTables, { table: selectedTable, time: selectedTime, userId }]);
         setSelectedTable(null);
         setSelectedTime('');
         alert(t('reservationSuccess'));
@@ -82,7 +104,7 @@ const Reservas = () => {
         
         <h1>{t('reservationTitle')}</h1>
         <p>{t('reservationPrompt')}</p>
-        <h3>{t('reserveForToday')}</h3> {/* Nueva línea para indicar que es por día */}
+        <h3>{t('reserveForToday')}</h3> {/* Indicador de que es por día */}
 
         <div className="d-flex justify-content-center mt-4">
           <select 
@@ -91,7 +113,7 @@ const Reservas = () => {
             onChange={handleTimeChange}
           >
             <option value="">{t('selectTime')}</option>
-            {timeOptions.map(option => (
+            {availableTimeOptions.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -113,7 +135,7 @@ const Reservas = () => {
         
         {selectedTable && selectedTime && (
           <button onClick={confirmReservation} className="btn btn-primary mt-3">
-            Confirmar Reserva
+            {t('confirmReservation')}
           </button>
         )}
       </div>
@@ -160,3 +182,4 @@ const Reservas = () => {
 };
 
 export default Reservas;
+

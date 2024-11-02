@@ -29,4 +29,5 @@ export default async function handler(req, res) {
     res.setHeader('Allow', ['GET', 'POST']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
+  const response = await axios.get('http://localhost:3000/api/reservas');
 }
