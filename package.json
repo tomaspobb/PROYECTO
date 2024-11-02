@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "initialize-db": "node initialize-db.js",
-    "dev": "npm run initialize-db && prisma migrate deploy && next dev",
+    "dev": "prisma migrate deploy && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
