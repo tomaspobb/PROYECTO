@@ -132,12 +132,12 @@ const Home = () => {
         <div id="registro" className="section text-center mt-5">
           <h2 className="mb-4">{t('enjoyExperience')}</h2>
           <button onClick={handleReservationClick} className="btn btn-primary">
-            {t('reserveForToday')} {/* Cambiado a "Reserva para Hoy" */}
+            {t('reserveForToday')}
           </button>
         </div>
 
         <div className="text-center mt-4">
-          <h5>Horario: Lunes a Viernes de 13:00 a 23:00</h5> {/* Agregado horario */}
+          <h5>{t('schedule')}</h5> {/* Usando traducción del horario */}
         </div>
       </main>
 
@@ -149,4 +149,3 @@ const Home = () => {
 };
 
 export default Home;
-

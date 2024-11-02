@@ -76,6 +76,7 @@
   "tableAlreadyReserved": "Esta mesa ya está reservada a esa hora.",
   "openingHours": "Horario de Atención",
   "mondayToFriday": "De lunes a viernes",
-  "reserveForToday": "Reserva para Hoy"
+  "reserveForToday": "Reserva para Hoy",
+  "schedule": "Horario: Lunes a Viernes de 13:00 a 23:00"
 }
 
