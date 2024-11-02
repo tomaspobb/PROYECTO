@@ -1,30 +1,19 @@
 // components/NavBar.js
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'next-i18next';
 
 const NavBar = () => {
-  const router = useRouter();
   const { t } = useTranslation('common');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const authStatus = localStorage.getItem('isAuthenticated');
-    setIsAuthenticated(authStatus === 'true');
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated');
-    setIsAuthenticated(false);
-    router.push('/');
-  };
+  const router = useRouter();
+  const { isAuthenticated, username, logout } = useContext(AuthContext);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container">
-        {/* Logo o Nombre del Restaurante */}
         <Link href="/" className="navbar-brand fw-bold text-uppercase">
           {t('restaurantName')}
         </Link>
@@ -62,7 +51,7 @@ const NavBar = () => {
               <li className="nav-item">
                 <button
                   className="nav-link btn btn-link text-warning"
-                  onClick={handleLogout}
+                  onClick={logout}
                   style={{ cursor: 'pointer' }}
                 >
                   {t('logout')}
@@ -76,7 +65,6 @@ const NavBar = () => {
               </li>
             )}
           </ul>
-          {/* Selector de idioma */}
           <div className="d-flex align-items-center ms-3">
             <LanguageSelector />
           </div>

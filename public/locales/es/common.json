@@ -52,11 +52,13 @@
   "registerDescription": "Regístrate en Sapori di Italia",
   "userAlreadyExists": "Este usuario ya está registrado",
   "registrationSuccess": "Usuario registrado exitosamente.",
-    "reservationTitle": "Reservas",
-    "reservationDescription": "Reserva tu mesa en Sapori di Italia",
-    "reservationPrompt": "Realiza tu reserva y disfruta de la mejor experiencia italiana.",
-    "name": "Nombre",
-    "reserveButton": "Reservar"
-  }
+  "reservationTitle": "Reservas",
+  "reservationDescription": "Reserva tu mesa en Sapori di Italia",
+  "reservationPrompt": "Realiza tu reserva y disfruta de la mejor experiencia italiana.",
+  "name": "Nombre",
+  "reserveButton": "Reservar",
+  "reservationSuccess": "Mesa reservada con éxito",
+  "confirmReservation": "Confirmar Reserva de Mesa"
+}
   
   

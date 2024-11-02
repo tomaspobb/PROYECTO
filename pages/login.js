@@ -1,10 +1,11 @@
 // pages/login.js
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { AuthContext } from '../components/AuthContext'; // Importar AuthContext
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const getStaticProps = async ({ locale }) => ({
@@ -15,6 +16,7 @@ export const getStaticProps = async ({ locale }) => ({
 
 const LoginPage = () => {
   const { t } = useTranslation('common');
+  const { login } = useContext(AuthContext); // Usar login del contexto de autenticación
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -37,11 +39,8 @@ const LoginPage = () => {
         throw new Error(data.message || 'Error en el inicio de sesión');
       }
 
-      // Guardar token en localStorage y datos del usuario
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('preferredLanguage', router.locale);
-      localStorage.setItem('username', username);
+      // Llamar a la función login del contexto
+      login(data.token, username, router.locale);
 
       router.push('/reservas'); // Redirigir a la página de reservas después del inicio de sesión exitoso
     } catch (err) {

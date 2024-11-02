@@ -1,10 +1,9 @@
 // pages/reservas.js
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Head from 'next/head';
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
@@ -15,6 +14,9 @@ export const getStaticProps = async ({ locale }) => ({
 const Reservas = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
+  const [selectedTable, setSelectedTable] = useState(null);
+  const [reservedTables, setReservedTables] = useState([]);
+  const tables = Array.from({ length: 5 * 5 }, (_, i) => i + 1);
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
@@ -23,33 +25,69 @@ const Reservas = () => {
     }
   }, [router]);
 
+  const handleTableClick = (tableNumber) => {
+    if (reservedTables.includes(tableNumber)) return;
+    setSelectedTable(tableNumber === selectedTable ? null : tableNumber);
+  };
+
+  const confirmReservation = () => {
+    if (selectedTable) {
+      setReservedTables([...reservedTables, selectedTable]);
+      setSelectedTable(null);
+      alert(t('reservationSuccess'));
+    }
+  };
+
   return (
-    <div>
+    <div className="container py-5 text-center">
       <Head>
-        <title>{t('reservationTitle')} - {t('restaurantName')}</title>
+        <title>{t('reservations')} - {t('restaurantName')}</title>
         <meta name="description" content={t('reservationDescription')} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className="container py-5">
-        <h1 className="text-center mb-5" style={{ color: 'var(--primary-color)' }}>
-          {t('reservationTitle')}
-        </h1>
-        <p className="text-center">{t('reservationPrompt')}</p>
-        <form className="mx-auto" style={{ maxWidth: '400px' }}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">{t('name')}</label>
-            <input type="text" className="form-control" id="name" required />
+      
+      <h1>{t('reservations')}</h1>
+      <p>{t('reservationPrompt')}</p>
+      
+      <div className="d-flex flex-wrap justify-content-center mt-4">
+        {tables.map((table) => (
+          <div
+            key={table}
+            onClick={() => handleTableClick(table)}
+            className={`table-seat ${reservedTables.includes(table) ? 'reserved' : ''} ${selectedTable === table ? 'selected' : ''}`}
+          >
+            {table}
           </div>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">{t('email')}</label>
-            <input type="email" className="form-control" id="email" required />
-          </div>
-          <button type="submit" className="btn btn-primary w-100">{t('reserveButton')}</button>
-        </form>
-      </main>
+        ))}
+      </div>
+      {selectedTable && (
+        <button onClick={confirmReservation} className="btn btn-primary mt-3">
+          {t('confirmReservation')} {selectedTable}
+        </button>
+      )}
 
-      <footer className="text-center py-4 bg-dark text-light">
+      <style jsx>{`
+        .table-seat {
+          width: 50px;
+          height: 50px;
+          margin: 5px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: lightgray;
+          border-radius: 5px;
+        }
+        .table-seat.selected {
+          background-color: lightblue;
+        }
+        .table-seat.reserved {
+          background-color: red;
+          cursor: not-allowed;
+        }
+      `}</style>
+
+      <footer className="text-center py-4 bg-dark text-light mt-5">
         <p>© {new Date().getFullYear()} {t('restaurantName')}. {t('allRightsReserved')}</p>
       </footer>
     </div>

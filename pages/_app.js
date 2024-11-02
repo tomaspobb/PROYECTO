@@ -2,6 +2,7 @@ import { appWithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import NavBar from '../components/NavBar';
+import { AuthProvider } from '../components/AuthContext'; // Importa el AuthProvider
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function MyApp({ Component, pageProps }) {
@@ -16,10 +17,10 @@ function MyApp({ Component, pageProps }) {
   }, [router]);
 
   return (
-    <>
+    <AuthProvider> {/* Envolvemos la aplicación en AuthProvider */}
       <NavBar />
       <Component {...pageProps} />
-    </>
+    </AuthProvider>
   );
 }
 

@@ -16,6 +16,7 @@ const Register = () => {
   const { t } = useTranslation('common');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
@@ -25,23 +26,19 @@ const Register = () => {
     setError(null);
 
     try {
-      // Enviar solicitud a la API para crear un usuario en la base de datos
       const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, email }),
       });
 
       if (response.ok) {
         setSuccess(true);
-
-        // Guardar el idioma preferido y el nombre de usuario en localStorage
         localStorage.setItem('preferredLanguage', router.locale);
         localStorage.setItem('username', username);
-
-        router.push('/login'); // Redirigir al login después del registro exitoso
+        router.push('/login');
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Registration failed');
@@ -59,7 +56,6 @@ const Register = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Formulario de Registro */}
       <main className="d-flex justify-content-center align-items-center vh-100">
         <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
           <h2 className="text-center mb-4" style={{ color: 'var(--primary-color)' }}>{t('register')}</h2>
@@ -71,6 +67,16 @@ const Register = () => {
                 className="form-control"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -91,7 +97,6 @@ const Register = () => {
         </div>
       </main>
 
-      {/* Footer Oscuro */}
       <footer className="text-center py-4 bg-dark text-light">
         <p>© {new Date().getFullYear()} {t('restaurantName')}. {t('allRightsReserved')}</p>
       </footer>
@@ -100,3 +105,5 @@ const Register = () => {
 };
 
 export default Register;
+
+
