@@ -28,6 +28,8 @@ const LoginPage = () => {
 
     if (storedUser && storedUser.password && bcrypt.compareSync(password, storedUser.password)) {
       localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('preferredLanguage', router.locale); // Guardar el idioma preferido
+      localStorage.setItem('username', username); // Guardar el nombre de usuario
       alert(t('loginSuccess'));
       router.push('/reservas');
     } else {

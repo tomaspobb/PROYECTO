@@ -39,6 +39,11 @@ const Register = () => {
     try {
       await registerUser(username, password);
       setSuccess(true);
+
+      // Guardar el idioma preferido y el nombre de usuario en localStorage
+      localStorage.setItem('preferredLanguage', router.locale);
+      localStorage.setItem('username', username);
+
       router.push('/login'); // Redirigir a login tras el registro exitoso
     } catch (err) {
       setError(err.message);

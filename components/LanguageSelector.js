@@ -1,4 +1,5 @@
-import { useState } from 'react';
+// components/LanguageSelector.js
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const LanguageSelector = () => {
@@ -6,11 +7,20 @@ const LanguageSelector = () => {
   const { pathname, asPath, query } = router;
   const [showDropdown, setShowDropdown] = useState(false);
 
+  useEffect(() => {
+    // Cargar el idioma preferido desde localStorage al cargar el componente
+    const preferredLanguage = localStorage.getItem('preferredLanguage');
+    if (preferredLanguage && preferredLanguage !== router.locale) {
+      router.push({ pathname, query }, asPath, { locale: preferredLanguage });
+    }
+  }, [router]);
+
   const toggleDropdown = () => setShowDropdown(!showDropdown);
 
   const changeLanguage = (locale) => {
     router.push({ pathname, query }, asPath, { locale });
-    setShowDropdown(false); // Cierra el menú después de seleccionar el idioma
+    localStorage.setItem('preferredLanguage', locale); // Guardar el idioma en localStorage
+    setShowDropdown(false);
   };
 
   return (
