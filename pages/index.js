@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import styles from '../styles/Home.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const getStaticProps = async ({ locale }) => ({
@@ -82,7 +81,7 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={`container py-5 ${styles.main}`}>
+      <main className="container py-5">
         <section id="testimonios" className="text-center">
           <h2 className="mb-4" style={{ color: 'var(--primary-color)' }}>{t('testimonialSection')}</h2>
           <div className="card mb-3 mx-auto" style={{ maxWidth: '540px' }}>
