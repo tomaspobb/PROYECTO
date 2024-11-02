@@ -12,6 +12,7 @@
   "location": "Location",
   "allRightsReserved": "All rights reserved.",
   "login": "Login",
+  "loginDescription": "Login to Sapori di Italia",
   "register": "Register",
   "username": "Username",
   "password": "Password",
@@ -45,5 +46,10 @@
   "margaritaPizzaDescription": "Classic pizza with tomato sauce, mozzarella, and fresh basil.",
   "pannaCottaDescription": "Creamy Italian dessert with a touch of vanilla.",
   "mineralWaterDescription": "Refreshing mineral water.",
-  "lemonadeDescription": "Delicious homemade lemonade."
+  "lemonadeDescription": "Delicious homemade lemonade.",
+  "noAccount": "Don't have an account?",
+  "registerHere": "Register here",
+  "registerDescription": "Register at Sapori di Italia",
+  "userAlreadyExists": "This user is already registered",
+  "registrationSuccess": "User successfully registered."
 }

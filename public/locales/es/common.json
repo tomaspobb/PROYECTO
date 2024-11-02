@@ -12,6 +12,7 @@
   "location": "Ubicación",
   "allRightsReserved": "Todos los derechos reservados.",
   "login": "Iniciar Sesión",
+  "loginDescription": "Inicia sesión en Sapori di Italia",
   "register": "Registro",
   "username": "Nombre de Usuario",
   "password": "Contraseña",
@@ -45,5 +46,11 @@
   "margaritaPizzaDescription": "Pizza clásica con salsa de tomate, mozzarella y albahaca fresca.",
   "pannaCottaDescription": "Postre italiano cremoso, suave y con un toque de vainilla.",
   "mineralWaterDescription": "Refrescante agua mineral.",
-  "lemonadeDescription": "Deliciosa limonada casera."
-}
+  "lemonadeDescription": "Deliciosa limonada casera.",
+  "noAccount": "¿No tienes cuenta?",
+  "registerHere": "Regístrate aquí",
+  "registerDescription": "Regístrate en Sapori di Italia",
+  "userAlreadyExists": "Este usuario ya está registrado",
+  "registrationSuccess": "Usuario registrado exitosamente."
+  }
+  

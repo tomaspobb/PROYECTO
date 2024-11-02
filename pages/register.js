@@ -3,21 +3,29 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import bcrypt from 'bcryptjs';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+});
+
 const Register = () => {
+  const { t } = useTranslation('common');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
 
-  // Función para registrar al usuario usando localStorage
   const registerUser = async (username, password) => {
     const users = JSON.parse(localStorage.getItem('users')) || {};
 
     if (users[username]) {
-      throw new Error('Este usuario ya está registrado');
+      throw new Error(t('userAlreadyExists'));
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -41,18 +49,18 @@ const Register = () => {
   return (
     <div>
       <Head>
-        <title>Registro - Sapori di Italia</title>
-        <meta name="description" content="Regístrate en Sapori di Italia" />
+        <title>{t('register')} - {t('restaurantName')}</title>
+        <meta name="description" content={t('registerDescription')} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {/* Formulario de Registro */}
       <main className="d-flex justify-content-center align-items-center vh-100">
         <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
-          <h2 className="text-center mb-4" style={{ color: 'var(--primary-color)' }}>Registro de Usuario</h2>
+          <h2 className="text-center mb-4" style={{ color: 'var(--primary-color)' }}>{t('register')}</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label className="form-label">Nombre de Usuario</label>
+              <label className="form-label">{t('username')}</label>
               <input
                 type="text"
                 className="form-control"
@@ -62,7 +70,7 @@ const Register = () => {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label">Contraseña</label>
+              <label className="form-label">{t('password')}</label>
               <input
                 type="password"
                 className="form-control"
@@ -71,16 +79,16 @@ const Register = () => {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100 mb-3">Registrarse</button>
+            <button type="submit" className="btn btn-primary w-100 mb-3">{t('register')}</button>
           </form>
           {error && <p className="text-danger text-center">{error}</p>}
-          {success && <p className="text-success text-center">Usuario registrado exitosamente.</p>}
+          {success && <p className="text-success text-center">{t('registrationSuccess')}</p>}
         </div>
       </main>
 
       {/* Footer Oscuro */}
       <footer className="text-center py-4 bg-dark text-light">
-        <p>© {new Date().getFullYear()} Restaurante Sapori di Italia. Todos los derechos reservados.</p>
+        <p>© {new Date().getFullYear()} {t('restaurantName')}. {t('allRightsReserved')}</p>
       </footer>
     </div>
   );
