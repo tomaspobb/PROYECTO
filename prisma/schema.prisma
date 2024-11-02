@@ -15,4 +15,9 @@ model User {
   createdAt DateTime @default(now())
 }
 
-
+model Reservation {
+  id        Int      @id @default(autoincrement())
+  table     Int
+  time      String
+  createdAt DateTime @default(now())
+}
