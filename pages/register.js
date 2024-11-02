@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import bcrypt from 'bcryptjs';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,33 +20,34 @@ const Register = () => {
   const [success, setSuccess] = useState(false);
   const router = useRouter();
 
-  const registerUser = async (username, password) => {
-    const users = JSON.parse(localStorage.getItem('users')) || {};
-
-    if (users[username]) {
-      throw new Error(t('userAlreadyExists'));
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    users[username] = { password: hashedPassword };
-    localStorage.setItem('users', JSON.stringify(users));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+
     try {
-      await registerUser(username, password);
-      setSuccess(true);
+      // Enviar solicitud a la API para crear un usuario en la base de datos
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-      // Guardar el idioma preferido y el nombre de usuario en localStorage
-      localStorage.setItem('preferredLanguage', router.locale);
-      localStorage.setItem('username', username);
+      if (response.ok) {
+        setSuccess(true);
 
-      router.push('/login'); // Redirigir a login tras el registro exitoso
+        // Guardar el idioma preferido y el nombre de usuario en localStorage
+        localStorage.setItem('preferredLanguage', router.locale);
+        localStorage.setItem('username', username);
+
+        router.push('/login'); // Redirigir al login después del registro exitoso
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Registration failed');
+      }
     } catch (err) {
-      setError(err.message);
-      setSuccess(false);
+      setError('An unexpected error occurred. Please try again later.');
     }
   };
 
