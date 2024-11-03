@@ -1,28 +1,37 @@
+// Importamos el hook de traducción y los componentes necesarios de Next.js
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
-import { getStaticPropsWithTranslations } from '../utils/i18nUtils'; // Asegúrate de crear esta utilidad como vimos antes
+// Importamos una utilidad personalizada para manejar las traducciones en las props estáticas
+import { getStaticPropsWithTranslations } from '../utils/i18nUtils';
+// Importamos los estilos de Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Configuramos las props estáticas para habilitar la traducción
 export const getStaticProps = async ({ locale }) => 
   getStaticPropsWithTranslations(locale);
 
 const Contacto = () => {
+  // Hook para obtener las traducciones del archivo de idioma 'common'
   const { t } = useTranslation('common');
 
   return (
     <div>
+      {/* Configuración de la cabecera de la página */}
       <Head>
         <title>{t('contact')}</title>
         <meta name="description" content={t('contactDescription')} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* Contenido principal de la página */}
       <main className="container py-5">
+        {/* Título de la página de contacto */}
         <h1 className="text-center mb-5" style={{ color: 'var(--primary-color)' }}>{t('contact')}</h1>
         <p className="text-center mb-4">{t('contactPrompt')}</p>
 
-        {/* Información de Contacto */}
+        {/* Sección de Información de Contacto */}
         <div className="row justify-content-center">
+          {/* Tarjeta de contacto para el teléfono */}
           <div className="col-md-6 col-lg-4">
             <div className="card text-center shadow mb-4">
               <div className="card-body">
@@ -31,6 +40,7 @@ const Contacto = () => {
               </div>
             </div>
           </div>
+          {/* Tarjeta de contacto para el correo electrónico */}
           <div className="col-md-6 col-lg-4">
             <div className="card text-center shadow mb-4">
               <div className="card-body">
@@ -39,6 +49,7 @@ const Contacto = () => {
               </div>
             </div>
           </div>
+          {/* Tarjeta de contacto para la dirección */}
           <div className="col-md-6 col-lg-4">
             <div className="card text-center shadow mb-4">
               <div className="card-body">
@@ -49,7 +60,7 @@ const Contacto = () => {
           </div>
         </div>
 
-        {/* Mapa */}
+        {/* Mapa de ubicación del restaurante */}
         <div className="text-center mt-5">
           <h2 className="mb-4" style={{ color: 'var(--primary-color)' }}>{t('location')}</h2>
           <iframe
@@ -63,7 +74,7 @@ const Contacto = () => {
         </div>
       </main>
 
-      {/* Footer Oscuro */}
+      {/* Footer oscuro al final de la página */}
       <footer className="text-center py-4 bg-dark text-light">
         <p>© {new Date().getFullYear()} {t('restaurantName')}. {t('allRightsReserved')}</p>
       </footer>

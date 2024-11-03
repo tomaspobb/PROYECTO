@@ -1,23 +1,23 @@
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "mysql" // Especifica que el proveedor de la base de datos es MySQL
+  url      = env("DATABASE_URL") // Obtiene la URL de conexión de la variable de entorno DATABASE_URL
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client-js" // Configura Prisma para generar el cliente JavaScript
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement()) // Campo ID único y autoincremental
+  username  String   @unique // Nombre de usuario único
+  email     String   @unique // Correo electrónico único
+  password  String // Contraseña del usuario
+  createdAt DateTime @default(now()) // Fecha de creación con valor predeterminado de la hora actual
 }
 
 model Reservation {
-  id        Int      @id @default(autoincrement())
-  table     Int
-  time      String
-  createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement()) // Campo ID único y autoincremental
+  table     Int // Número de mesa reservado
+  time      String // Hora de la reserva
+  createdAt DateTime @default(now()) // Fecha de creación de la reserva con la hora actual por defecto
 }

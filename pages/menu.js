@@ -1,9 +1,11 @@
+// Importamos los módulos necesarios de Next.js y React para manejar las traducciones y los estilos de Bootstrap
 import Head from 'next/head';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Configuración de props estáticas para habilitar las traducciones en el menú
 export const getStaticProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common'])),
@@ -11,8 +13,10 @@ export const getStaticProps = async ({ locale }) => ({
 });
 
 const Menu = () => {
+  // Hook para obtener las traducciones del archivo de idioma 'common'
   const { t } = useTranslation('common');
 
+  // Objeto que contiene las categorías de platos con sus detalles: nombre, precio, imagen y descripción traducidos
   const dishes = {
     antipasta: [
       { name: t("bruschetta"), price: "$6,000 CLP", image: "/images/bruschetta.jpg", description: t("bruschettaDescription") },
@@ -35,18 +39,25 @@ const Menu = () => {
 
   return (
     <div>
+      {/* Cabecera de la página de menú */}
       <Head>
         <title>{t('menu')} - {t('restaurantName')}</title>
         <meta name="description" content={t('menuDescription')} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* Contenido principal de la página */}
       <main className="container py-5">
         <h1 className="text-center mb-5" style={{ color: 'var(--primary-color)' }}>{t('ourMenu')}</h1>
+        
+        {/* Iteramos sobre cada categoría de platos */}
         {Object.keys(dishes).map((category, index) => (
           <div id={category} className="mb-5" key={index}>
+            {/* Título de la categoría con estilo y traducción */}
             <h2 className="text-center text-capitalize mb-4" style={{ color: 'var(--primary-color)' }}>{t(category)}</h2>
             <div className="row justify-content-center">
+              
+              {/* Iteramos sobre cada plato dentro de la categoría actual */}
               {dishes[category].map((dish, idx) => (
                 <div className="col-md-4 mb-4" key={idx}>
                   <div className="card h-100 shadow">
@@ -71,6 +82,7 @@ const Menu = () => {
         ))}
       </main>
 
+      {/* Footer oscuro al final de la página */}
       <footer className="text-center py-4 bg-dark text-light">
         <p>© {new Date().getFullYear()} {t('restaurantName')}. {t('allRightsReserved')}</p>
       </footer>

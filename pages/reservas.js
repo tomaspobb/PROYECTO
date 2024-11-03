@@ -1,4 +1,4 @@
-// pages/reservas.js
+// Importamos los módulos necesarios de React, Next.js y Axios para manejar las traducciones, autenticación y reservas
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -6,6 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import axios from 'axios';
 
+// Configuración de props estáticas para habilitar las traducciones en la página de reservas
 export const getStaticProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common'])),
@@ -13,22 +14,29 @@ export const getStaticProps = async ({ locale }) => ({
 });
 
 const Reservas = () => {
+  // Hook para obtener las traducciones del archivo de idioma 'common'
   const { t } = useTranslation('common');
   const router = useRouter();
+  
+  // Estados para manejar la selección de mesa, hora, mesas reservadas y opciones de horario disponibles
   const [selectedTable, setSelectedTable] = useState(null);
   const [selectedTime, setSelectedTime] = useState('');
   const [reservedTables, setReservedTables] = useState([]);
   const [availableTimeOptions, setAvailableTimeOptions] = useState([]);
+  
+  // Definimos un array de mesas (25 mesas numeradas del 1 al 25)
   const tables = Array.from({ length: 5 * 5 }, (_, i) => i + 1);
 
+  // Efecto para verificar la autenticación del usuario y cargar las reservas existentes
   useEffect(() => {
+    // Verificamos si el usuario está autenticado, de lo contrario lo redirigimos al login
     const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
     if (!isAuthenticated) {
       router.push('/login');
       return;
     }
 
-    // Set available times based on current hour in Chile timezone
+    // Configuramos los horarios disponibles basados en la hora actual de Chile
     const chileTime = new Date().toLocaleString('en-US', { timeZone: 'America/Santiago' });
     const currentHour = new Date(chileTime).getHours();
     const options = [
@@ -47,6 +55,7 @@ const Reservas = () => {
 
     setAvailableTimeOptions(options);
 
+    // Función para cargar las mesas reservadas desde la API
     const fetchReservedTables = async () => {
       try {
         const response = await axios.get('/api/reservas');
@@ -58,15 +67,20 @@ const Reservas = () => {
     fetchReservedTables();
   }, [router]);
 
+  // Función para manejar la selección de una mesa
   const handleTableClick = (tableNumber) => {
+    // Si la mesa está reservada a la hora seleccionada, no permite seleccionarla
     if (reservedTables.some(reservation => reservation.table === tableNumber && reservation.time === selectedTime)) return;
+    // Alterna la selección de la mesa
     setSelectedTable(tableNumber === selectedTable ? null : tableNumber);
   };
 
+  // Función para confirmar la reserva de una mesa
   const confirmReservation = async () => {
-    const userId = localStorage.getItem('userId'); // Obtén el ID del usuario autenticado
+    const userId = localStorage.getItem('userId'); // Obtiene el ID del usuario autenticado
     if (selectedTable && selectedTime && userId) {
       try {
+        // Verifica si la mesa ya está reservada en el horario seleccionado
         const isTableReserved = reservedTables.some(
           reservation => reservation.table === selectedTable && reservation.time === selectedTime
         );
@@ -76,6 +90,7 @@ const Reservas = () => {
           return;
         }
 
+        // Enviamos la reserva a la API y actualizamos el estado
         await axios.post('/api/reservas', { table: selectedTable, time: selectedTime, userId });
         setReservedTables([...reservedTables, { table: selectedTable, time: selectedTime, userId }]);
         setSelectedTable(null);
@@ -89,6 +104,7 @@ const Reservas = () => {
     }
   };
 
+  // Función para manejar la selección del horario
   const handleTimeChange = (e) => {
     setSelectedTime(e.target.value);
   };
@@ -104,8 +120,9 @@ const Reservas = () => {
         
         <h1>{t('reservationTitle')}</h1>
         <p>{t('reservationPrompt')}</p>
-        <h3>{t('reserveForToday')}</h3> {/* Indicador de que es por día */}
+        <h3>{t('reserveForToday')}</h3>
 
+        {/* Selector de horarios */}
         <div className="d-flex justify-content-center mt-4">
           <select 
             className="form-select w-auto"
@@ -121,6 +138,7 @@ const Reservas = () => {
           </select>
         </div>
 
+        {/* Visualización de mesas */}
         <div className="d-flex flex-wrap justify-content-center mt-4">
           {tables.map((table) => (
             <div
@@ -133,6 +151,7 @@ const Reservas = () => {
           ))}
         </div>
         
+        {/* Botón de confirmación */}
         {selectedTable && selectedTime && (
           <button onClick={confirmReservation} className="btn btn-primary mt-3">
             {t('confirmReservation')}
@@ -140,10 +159,12 @@ const Reservas = () => {
         )}
       </div>
 
+      {/* Footer */}
       <footer className="footer">
         <p>© {new Date().getFullYear()} {t('restaurantName')}. {t('allRightsReserved')}</p>
       </footer>
 
+      {/* Estilos CSS en línea para la disposición de las mesas y el footer */}
       <style jsx>{`
         .container {
           min-height: calc(100vh - 60px);
@@ -182,4 +203,3 @@ const Reservas = () => {
 };
 
 export default Reservas;
-
