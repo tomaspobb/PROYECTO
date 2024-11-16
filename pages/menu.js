@@ -30,6 +30,7 @@ const Menu = () => {
     ],
     postre: [
       { name: t("pannaCotta"), price: "$5,000 CLP", image: "/images/panna-cotta.jpg", description: t("pannaCottaDescription") },
+      { name: t("tiramisu"), price: "$6,000 CLP", image: "/images/tiramisu.jpg", description: t("tiramisuDescription") },
     ],
     bebidas: [
       { name: t("mineralWater"), price: "$1,500 CLP", image: "/images/agua-mineral.jpg", description: t("mineralWaterDescription") },
