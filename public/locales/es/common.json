@@ -79,6 +79,9 @@
   "openingHours": "Horario de Atención",
   "mondayToFriday": "De lunes a viernes",
   "reserveForToday": "Reserva para Hoy",
-  "schedule": "Horario: Lunes a Viernes de 13:00 a 24:00"
+  "schedule": "Horario: Lunes a Viernes de 13:00 a 24:00",
+  "mostFrequentedTimes": "Horarios Más Frecuentados",
+  "frequentedTimesDescription": "Distribución de las reservas por día del mes actual.",
+  "daysOfMonth": "Días del mes"
 }
 

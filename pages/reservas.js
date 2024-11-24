@@ -157,6 +157,13 @@ const Reservas = () => {
             {t('confirmReservation')}
           </button>
         )}
+
+        {/* Botón para redirigir a "Horarios Más Frecuentados" */}
+        <div className="d-flex justify-content-center mt-4">
+          <a href="/horarios-mas-frecuentados" className="btn-frecuentados">
+            {t('mostFrequentedTimes')}
+          </a>
+        </div>
       </div>
 
       {/* Footer */}
@@ -196,6 +203,21 @@ const Reservas = () => {
           position: fixed;
           bottom: 0;
           left: 0;
+        }
+        .btn-frecuentados {
+          display: inline-block;
+          padding: 10px 20px;
+          font-size: 16px;
+          color: white;
+          background-color: #007bff;
+          border-radius: 20px;
+          text-decoration: none;
+          text-align: center;
+          margin-top: 20px;
+          transition: background-color 0.3s ease;
+        }
+        .btn-frecuentados:hover {
+          background-color: #0056b3;
         }
       `}</style>
     </>

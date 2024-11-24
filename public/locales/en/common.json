@@ -79,6 +79,9 @@
   "openingHours": "Opening Hours",
   "mondayToFriday": "Monday to Friday",
   "reserveForToday": "Reserve for Today",
-  "schedule": "Schedule: Monday to Friday from 1:00 PM to 12:00 PM" 
+  "schedule": "Schedule: Monday to Friday from 1:00 PM to 12:00 PM",
+  "mostFrequentedTimes": "Most Frequented Times",
+  "frequentedTimesDescription": "Distribution of reservations by day of the current month.",
+  "daysOfMonth": "Days of the Month"
 }
 
