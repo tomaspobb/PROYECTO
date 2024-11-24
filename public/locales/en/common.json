@@ -82,6 +82,11 @@
   "schedule": "Schedule: Monday to Friday from 1:00 PM to 12:00 PM",
   "mostFrequentedTimes": "Most Frequented Times",
   "frequentedTimesDescription": "Distribution of reservations by day of the current month.",
-  "daysOfMonth": "Days of the Month"
+  "daysOfMonth": "Days of the Month",
+  "mostFrequentedDay": "Most Frequented Day",
+  "reservationsByDay": "Reservations by Day",
+  "reservationsByHour": "Reservations Distribution by Hour",
+  "monthlyFrequency": "Frequency within the month",
+  "todayFrequency": "Reservation Frequency for Today"
 }
 

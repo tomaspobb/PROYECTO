@@ -82,6 +82,11 @@
   "schedule": "Horario: Lunes a Viernes de 13:00 a 24:00",
   "mostFrequentedTimes": "Horarios Más Frecuentados",
   "frequentedTimesDescription": "Distribución de las reservas por día del mes actual.",
-  "daysOfMonth": "Días del mes"
+  "daysOfMonth": "Días del mes",
+  "mostFrequentedDay": "Día más frecuentado",
+  "reservationsByDay": "Reservas por día",
+  "reservationsByHour": "Distribución de reservas por hora",
+  "monthlyFrequency": "Frecuencia dentro del mes",
+  "todayFrequency": "Frecuencia de Reservas para el día de hoy"
 }
 

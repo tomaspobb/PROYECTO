@@ -4,7 +4,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import Chart from "chart.js/auto";
 
-// Configuración para traducciones
 export const getStaticProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common"])),
@@ -12,33 +11,42 @@ export const getStaticProps = async ({ locale }) => ({
 });
 
 export default function HorariosMasFrecuentados() {
-  const { t } = useTranslation("common"); // Traducciones
-  const [labels, setLabels] = useState([]);
-  const [data, setData] = useState([]);
+  const { t } = useTranslation("common");
+  const [mostFrequentedDay, setMostFrequentedDay] = useState("");
+  const [mostFrequentedDayCount, setMostFrequentedDayCount] = useState(0);
+  const [labelsDays, setLabelsDays] = useState([]);
+  const [dataDays, setDataDays] = useState([]);
+  const [labelsHours, setLabelsHours] = useState([]);
+  const [dataHours, setDataHours] = useState([]);
 
-  // Efecto para cargar los datos del gráfico desde la API
   useEffect(() => {
     fetch("/api/get-frequent-times")
       .then((response) => response.json())
       .then((result) => {
-        setLabels(result.labels);
-        setData(result.data);
-        renderChart(result.labels, result.data);
+        setMostFrequentedDay(result.mostFrequentedDay);
+        setMostFrequentedDayCount(result.mostFrequentedDayCount);
+        setLabelsDays(result.labelsDays);
+        setDataDays(result.dataDays);
+        setLabelsHours(result.labelsHours);
+        setDataHours(result.dataHours);
+
+        // Renderizar los gráficos
+        renderDayChart(result.labelsDays, result.dataDays);
+        renderHourChart(result.labelsHours, result.dataHours);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // Función para renderizar el gráfico
-  const renderChart = (labels, data) => {
-    const ctx = document.getElementById("frequentTimesChart").getContext("2d");
+  const renderDayChart = (labels, data) => {
+    const ctx = document.getElementById("dayChart").getContext("2d");
     new Chart(ctx, {
       type: "bar",
       data: {
-        labels: labels, // Fechas
+        labels: labels,
         datasets: [
           {
-            label: t("mostFrequentedTimes"),
-            data: data, // Número de reservas
+            label: t("reservationsByDay"),
+            data: data,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             borderColor: "rgba(75, 192, 192, 1)",
             borderWidth: 1,
@@ -48,19 +56,32 @@ export default function HorariosMasFrecuentados() {
       options: {
         responsive: true,
         scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: t("reservations"), // Etiqueta del eje Y
-            },
+          y: { beginAtZero: true },
+        },
+      },
+    });
+  };
+
+  const renderHourChart = (labels, data) => {
+    const ctx = document.getElementById("hourChart").getContext("2d");
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: t("reservationsByHour"),
+            data: data,
+            backgroundColor: "rgba(153, 102, 255, 0.2)",
+            borderColor: "rgba(153, 102, 255, 1)",
+            borderWidth: 1,
           },
-          x: {
-            title: {
-              display: true,
-              text: t("daysOfMonth"), // Etiqueta del eje X
-            },
-          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true },
         },
       },
     });
@@ -73,14 +94,66 @@ export default function HorariosMasFrecuentados() {
       </Head>
 
       <h1 className="text-center">{t("mostFrequentedTimes")}</h1>
-      <p className="text-center">{t("frequentedTimesDescription")}</p>
 
-      <div className="chart-container mt-4">
-        <canvas id="frequentTimesChart"></canvas>
+      {/* Acordeón: Frecuencia dentro del mes */}
+      <div className="accordion mt-4">
+        <button
+          className="accordion-button"
+          onClick={() =>
+            document.getElementById("monthlyFrequency").classList.toggle("show")
+          }
+        >
+          {t("monthlyFrequency")}
+        </button>
+        <div id="monthlyFrequency" className="accordion-content">
+          <h3>{t("reservationsByDay")}</h3>
+          <canvas id="dayChart"></canvas>
+        </div>
       </div>
 
-      {/* Estilo CSS */}
+      {/* Acordeón: Frecuencia de reservas para hoy */}
+      <div className="accordion mt-4">
+        <button
+          className="accordion-button"
+          onClick={() =>
+            document.getElementById("dailyFrequency").classList.toggle("show")
+          }
+        >
+          {t("todayFrequency")}
+        </button>
+        <div id="dailyFrequency" className="accordion-content">
+          <h3>{t("reservationsByHour")}</h3>
+          <canvas id="hourChart"></canvas>
+        </div>
+      </div>
+
       <style jsx>{`
+        .accordion {
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          margin-bottom: 20px;
+        }
+        .accordion-button {
+          width: 100%;
+          padding: 15px;
+          text-align: left;
+          background-color: #f7f7f7;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+        }
+        .accordion-button:hover {
+          background-color: #e6e6e6;
+        }
+        .accordion-content {
+          display: none;
+          overflow: hidden;
+          padding: 15px;
+          border-top: 1px solid #ddd;
+        }
+        .accordion-content.show {
+          display: block;
+        }
         .chart-container {
           width: 100%;
           max-width: 800px;
