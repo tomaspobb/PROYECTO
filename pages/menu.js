@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useRouter } from 'next/router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Configuración de props estáticas para habilitar las traducciones en el menú
@@ -15,6 +16,12 @@ export const getStaticProps = async ({ locale }) => ({
 const Menu = () => {
   // Hook para obtener las traducciones del archivo de idioma 'common'
   const { t } = useTranslation('common');
+  const router = useRouter();
+
+  // Función para manejar la redirección a la página de votación
+  const handleVoteRedirect = () => {
+    router.push('/vote');
+  };
 
   // Objeto que contiene las categorías de platos con sus detalles: nombre, precio, imagen y descripción traducidos
   const dishes = {
@@ -55,6 +62,13 @@ const Menu = () => {
         <meta name="description" content={t('menuDescription')} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      {/* Botón para redirigir a la votación */}
+      <div className="text-center mt-4">
+        <button className="btn btn-success mb-4" onClick={handleVoteRedirect}>
+          {t('voteForYourFavoriteDish')}
+        </button>
+      </div>
 
       {/* Contenido principal de la página */}
       <main className="container py-5">

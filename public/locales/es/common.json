@@ -103,6 +103,13 @@
   "fourCheesePizza": "Pizza Cuatro Quesos",
   "fourCheesePizzaDescription": "Pizza con una mezcla de quesos: mozzarella, gorgonzola, parmesano y ricotta.",
   "serranoPizza": "Pizza de Jamón Serrano",
-  "serranoPizzaDescription": "Pizza con jamón serrano y rúcula fresca."
+  "serranoPizzaDescription": "Pizza con jamón serrano y rúcula fresca.",
+  "voteForYourFavoriteDish": "Vota por tu plato favorito",
+  "selectADish": "Selecciona un plato antes de votar",
+  "voteSubmitted": "¡Tu voto ha sido registrado!",
+  "voteError": "Hubo un error al registrar tu voto. Inténtalo de nuevo.",
+  "selectDish": "Selecciona un plato",
+  "submitVote": "Enviar Voto"
+  
 }
 
