@@ -23,7 +23,8 @@ model Reservation {
 }
 
 model Dish {
-  id    Int    @id @default(autoincrement())
-  name  String
-  votes Int    @default(0) // Campo para almacenar la cantidad de votos
+  id             Int    @id @default(autoincrement())
+  name           String
+  translationKey String
+  votes          Int    @default(0)
 }
