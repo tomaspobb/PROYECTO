@@ -87,6 +87,7 @@
   "reservationsByDay": "Reservations by Day",
   "reservationsByHour": "Reservations Distribution by Hour",
   "monthlyFrequency": "Frequency within the month",
-  "todayFrequency": "Reservation Frequency for Today"
+  "todayFrequency": "Reservation Frequency for Today",
+  "backToReservations": "Back to Reservations"
 }
 

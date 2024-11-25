@@ -91,6 +91,13 @@ export default function HorariosMasFrecuentados() {
 
       <h1 className="text-center">{t("mostFrequentedTimes")}</h1>
 
+      {/* Botón para regresar a la página de reservas */}
+      <div className="d-flex justify-content-center mt-4">
+        <a href="/reservas" className="btn-back">
+          {t("backToReservations")}
+        </a>
+      </div>
+
       {/* Acordeón: Frecuencia dentro del mes */}
       <div className="accordion mt-4">
         <button
@@ -154,6 +161,20 @@ export default function HorariosMasFrecuentados() {
           width: 100%;
           max-width: 800px;
           margin: 0 auto;
+        }
+        .btn-back {
+          display: inline-block;
+          padding: 10px 20px;
+          font-size: 16px;
+          color: white;
+          background-color: #007bff;
+          border-radius: 20px;
+          text-decoration: none;
+          text-align: center;
+          transition: background-color 0.3s ease;
+        }
+        .btn-back:hover {
+          background-color: #0056b3;
         }
       `}</style>
     </div>
