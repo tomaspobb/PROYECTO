@@ -11,11 +11,13 @@ export const getStaticProps = async ({ locale }) => ({
 });
 
 export default function HorariosMasFrecuentados() {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const [labelsDays, setLabelsDays] = useState([]);
   const [dataDays, setDataDays] = useState([]);
   const [labelsHoursToday, setLabelsHoursToday] = useState([]);
   const [dataHoursToday, setDataHoursToday] = useState([]);
+  const [dayChart, setDayChart] = useState(null);
+  const [hourChart, setHourChart] = useState(null);
 
   useEffect(() => {
     fetch("/api/get-frequent-times")
@@ -26,22 +28,32 @@ export default function HorariosMasFrecuentados() {
         setLabelsHoursToday(result.labelsHoursToday);
         setDataHoursToday(result.dataHoursToday);
 
-        // Renderizar los gráficos
+        // Renderizar los gráficos inicialmente
         renderDayChart(result.labelsDays, result.dataDays);
         renderHourChart(result.labelsHoursToday, result.dataHoursToday);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  // Efecto para actualizar los gráficos cuando cambia el idioma
+  useEffect(() => {
+    if (dayChart) {
+      updateDayChart();
+    }
+    if (hourChart) {
+      updateHourChart();
+    }
+  }, [i18n.language]);
+
   const renderDayChart = (labels, data) => {
     const ctx = document.getElementById("dayChart").getContext("2d");
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: labels,
+        labels: labels.map((day) => t("day") + ` ${day.split(" ")[1]}`), // Traducir días
         datasets: [
           {
-            label: t("reservationsByDay"),
+            label: t("reservationsByDay"), // Traducir leyenda
             data: data,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             borderColor: "rgba(75, 192, 192, 1)",
@@ -56,17 +68,18 @@ export default function HorariosMasFrecuentados() {
         },
       },
     });
+    setDayChart(chart);
   };
 
   const renderHourChart = (labels, data) => {
     const ctx = document.getElementById("hourChart").getContext("2d");
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
       type: "bar",
       data: {
         labels: labels,
         datasets: [
           {
-            label: t("reservationsByHour"),
+            label: t("reservationsByHour"), // Traducir leyenda
             data: data,
             backgroundColor: "rgba(153, 102, 255, 0.2)",
             borderColor: "rgba(153, 102, 255, 1)",
@@ -81,6 +94,18 @@ export default function HorariosMasFrecuentados() {
         },
       },
     });
+    setHourChart(chart);
+  };
+
+  const updateDayChart = () => {
+    dayChart.data.labels = labelsDays.map((day) => t("day") + ` ${day.split(" ")[1]}`);
+    dayChart.data.datasets[0].label = t("reservationsByDay");
+    dayChart.update();
+  };
+
+  const updateHourChart = () => {
+    hourChart.data.datasets[0].label = t("reservationsByHour");
+    hourChart.update();
   };
 
   return (
