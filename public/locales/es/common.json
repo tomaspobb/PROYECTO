@@ -89,6 +89,20 @@
   "monthlyFrequency": "Frecuencia dentro del mes",
   "todayFrequency": "Frecuencia de Reservas para el día de hoy",
   "backToReservations": "Volver a Reservas",
-  "day": "Día"
+  "day": "Día",
+  "fettuccine": "Fettuccine Alfredo con Pollo",
+  "fettuccineDescription": "Fettuccine en una cremosa salsa Alfredo con trozos de pollo jugoso.",
+  "gnocchipesto": "Ñoquis al Pesto",
+  "gnocchipestoDescription": "Ñoquis de papa con salsa de pesto casera.",
+  "ravioli": "Ravioles de Ricotta y Espinaca",
+  "ravioliDescription": "Ravioles rellenos de ricotta y espinaca.",
+  "traditionalLasagna": "Lasaña Tradicional",
+  "traditionalLasagnaDescription": "Capas de pasta, carne y queso en una salsa deliciosa.",
+  "hamCheeseLasagna": "Lasaña de Jamón y Queso",
+  "hamCheeseLasagnaDescription": "Lasaña con jamón, queso y salsa bechamel.",
+  "fourCheesePizza": "Pizza Cuatro Quesos",
+  "fourCheesePizzaDescription": "Pizza con una mezcla de quesos: mozzarella, gorgonzola, parmesano y ricotta.",
+  "serranoPizza": "Pizza de Jamón Serrano",
+  "serranoPizzaDescription": "Pizza con jamón serrano y rúcula fresca."
 }
 

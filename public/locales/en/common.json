@@ -89,6 +89,20 @@
   "monthlyFrequency": "Frequency within the month",
   "todayFrequency": "Reservation Frequency for Today",
   "backToReservations": "Back to Reservations",
-  "day": "Day"
+  "day": "Day",
+  "fettuccine": "Chicken Fettuccine Alfredo",
+  "fettuccineDescription": "Fettuccine in a creamy Alfredo sauce with juicy chicken pieces.",
+  "gnocchipesto": "Gnocchi with Pesto",
+  "gnocchipestoDescription": "Potato gnocchi with homemade pesto sauce.",
+  "ravioli": "Ricotta and Spinach Ravioli",
+  "ravioliDescription": "Ravioli stuffed with ricotta and spinach.",
+  "traditionalLasagna": "Traditional Lasagna",
+  "traditionalLasagnaDescription": "Layers of pasta, meat, and cheese in a delicious sauce.",
+  "hamCheeseLasagna": "Ham and Cheese Lasagna",
+  "hamCheeseLasagnaDescription": "Lasagna with ham, cheese, and béchamel sauce.",
+  "fourCheesePizza": "Four Cheese Pizza",
+  "fourCheesePizzaDescription": "Pizza with a blend of mozzarella, gorgonzola, parmesan, and ricotta cheeses.",
+  "serranoPizza": "Serrano Ham Pizza",
+  "serranoPizzaDescription": "Pizza with serrano ham and fresh arugula."
 }
 

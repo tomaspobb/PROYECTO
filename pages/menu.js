@@ -24,9 +24,18 @@ const Menu = () => {
     ],
     pasta: [
       { name: t("carbonara"), price: "$10,000 CLP", image: "/images/carbonara.jpg", description: t("carbonaraDescription") },
+      { name: t("fettuccine"), price: "$9,000 CLP", image: "/images/fettuccine.jpg", description: t("fettuccineDescription") },
+      { name: t("gnocchipesto"), price: "$8,500 CLP", image: "/images/gnocchipesto.jpg", description: t("gnocchipestoDescription") },
+      { name: t("ravioli"), price: "$10,500 CLP", image: "/images/raviolesricottaespinaca.jpg", description: t("ravioliDescription") },
+    ],
+    lasagna: [
+      { name: t("traditionalLasagna"), price: "$11,000 CLP", image: "/images/lasaña.png", description: t("traditionalLasagnaDescription") },
+      { name: t("hamCheeseLasagna"), price: "$12,000 CLP", image: "/images/lasañaquesojamon.jpg", description: t("hamCheeseLasagnaDescription") },
     ],
     pizza: [
       { name: t("margaritaPizza"), price: "$8,000 CLP", image: "/images/pizza-margarita.jpg", description: t("margaritaPizzaDescription") },
+      { name: t("fourCheesePizza"), price: "$10,000 CLP", image: "/images/pizzacuatroquesos.jpg", description: t("fourCheesePizzaDescription") },
+      { name: t("serranoPizza"), price: "$11,500 CLP", image: "/images/pizzajamonserrano.jpg", description: t("serranoPizzaDescription") },
     ],
     postre: [
       { name: t("pannaCotta"), price: "$5,000 CLP", image: "/images/panna-cotta.jpg", description: t("pannaCottaDescription") },
