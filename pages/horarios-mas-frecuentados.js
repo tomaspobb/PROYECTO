@@ -12,27 +12,23 @@ export const getStaticProps = async ({ locale }) => ({
 
 export default function HorariosMasFrecuentados() {
   const { t } = useTranslation("common");
-  const [mostFrequentedDay, setMostFrequentedDay] = useState("");
-  const [mostFrequentedDayCount, setMostFrequentedDayCount] = useState(0);
   const [labelsDays, setLabelsDays] = useState([]);
   const [dataDays, setDataDays] = useState([]);
-  const [labelsHours, setLabelsHours] = useState([]);
-  const [dataHours, setDataHours] = useState([]);
+  const [labelsHoursToday, setLabelsHoursToday] = useState([]);
+  const [dataHoursToday, setDataHoursToday] = useState([]);
 
   useEffect(() => {
     fetch("/api/get-frequent-times")
       .then((response) => response.json())
       .then((result) => {
-        setMostFrequentedDay(result.mostFrequentedDay);
-        setMostFrequentedDayCount(result.mostFrequentedDayCount);
         setLabelsDays(result.labelsDays);
         setDataDays(result.dataDays);
-        setLabelsHours(result.labelsHours);
-        setDataHours(result.dataHours);
+        setLabelsHoursToday(result.labelsHoursToday);
+        setDataHoursToday(result.dataHoursToday);
 
         // Renderizar los gráficos
         renderDayChart(result.labelsDays, result.dataDays);
-        renderHourChart(result.labelsHours, result.dataHours);
+        renderHourChart(result.labelsHoursToday, result.dataHoursToday);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);

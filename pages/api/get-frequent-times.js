@@ -5,8 +5,11 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
-      const now = new Date();
-      const currentMonth = now.getMonth() + 1; // Mes actual
+      // Obtener la hora actual en la zona horaria de Chile
+      const chileTime = new Date().toLocaleString('en-US', { timeZone: 'America/Santiago' });
+      const now = new Date(chileTime);
+      const currentDay = now.getDate();
+      const currentMonth = now.getMonth() + 1; // Mes actual (1-12)
       const currentYear = now.getFullYear();
 
       // Obtener todas las reservas del mes actual
@@ -26,36 +29,28 @@ export default async function handler(req, res) {
         dayCounts[day] = (dayCounts[day] || 0) + 1;
       });
 
-      // Determinar el día más frecuentado
-      const mostFrequentedDay = Object.keys(dayCounts).reduce(
-        (a, b) => (dayCounts[a] > dayCounts[b] ? a : b),
-        null
+      // Obtener las reservas para el día actual
+      const reservationsToday = reservations.filter(
+        (reservation) => new Date(reservation.createdAt).getDate() === currentDay
       );
 
-      // Obtener la distribución por hora del día más frecuentado (opcional)
-      const reservationsOnMostFrequentedDay = reservations.filter(
-        (reservation) => new Date(reservation.createdAt).getDate() === parseInt(mostFrequentedDay)
-      );
-
-      const hourCounts = {};
-      reservationsOnMostFrequentedDay.forEach((reservation) => {
+      const hourCountsToday = {};
+      reservationsToday.forEach((reservation) => {
         const hour = parseInt(reservation.time.split(':')[0]); // Hora de la columna 'time'
-        hourCounts[hour] = (hourCounts[hour] || 0) + 1;
+        hourCountsToday[hour] = (hourCountsToday[hour] || 0) + 1;
       });
 
       // Formatear respuesta
       const labelsDays = Object.keys(dayCounts).map((day) => `Día ${day}`);
       const dataDays = Object.values(dayCounts);
-      const labelsHours = Object.keys(hourCounts).map((hour) => `${hour}:00`);
-      const dataHours = Object.values(hourCounts);
+      const labelsHoursToday = Object.keys(hourCountsToday).map((hour) => `${hour}:00`);
+      const dataHoursToday = Object.values(hourCountsToday);
 
       res.status(200).json({
-        mostFrequentedDay: `Día ${mostFrequentedDay}`,
-        mostFrequentedDayCount: dayCounts[mostFrequentedDay],
         labelsDays,
         dataDays,
-        labelsHours,
-        dataHours,
+        labelsHoursToday,
+        dataHoursToday,
       });
     } catch (error) {
       console.error("Error fetching data:", error);
