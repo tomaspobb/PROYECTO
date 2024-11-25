@@ -64,7 +64,7 @@ const Vote = () => {
         <option value="">{t('selectDish')}</option>
         {dishes.map((dish) => (
           <option key={dish.id} value={dish.id}>
-            {dish.name}
+            {t(dish.translationKey)} {/* Traducción dinámica usando la clave de traducción */}
           </option>
         ))}
       </select>
