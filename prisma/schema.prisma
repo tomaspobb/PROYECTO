@@ -21,10 +21,3 @@ model Reservation {
   time      String // Hora de la reserva
   createdAt DateTime @default(now()) // Fecha de creación de la reserva con la hora actual por defecto
 }
-
-model Dish {
-  id             Int    @id @default(autoincrement())
-  name           String
-  translationKey String
-  votes          Int    @default(0)
-}

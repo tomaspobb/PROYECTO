@@ -63,13 +63,6 @@ const Menu = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Botón para redirigir a la votación */}
-      <div className="text-center mt-4">
-        <button className="btn btn-success mb-4" onClick={handleVoteRedirect}>
-          {t('voteForYourFavoriteDish')}
-        </button>
-      </div>
-
       {/* Contenido principal de la página */}
       <main className="container py-5">
         <h1 className="text-center mb-5" style={{ color: 'var(--primary-color)' }}>{t('ourMenu')}</h1>

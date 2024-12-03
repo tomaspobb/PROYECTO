@@ -5,42 +5,46 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
-      // Obtener la hora actual en la zona horaria de Chile
-      const chileTime = new Date().toLocaleString('en-US', { timeZone: 'America/Santiago' });
-      const now = new Date(chileTime);
-      const currentDay = now.getDate();
-      const currentMonth = now.getMonth() + 1; // Mes actual (1-12)
-      const currentYear = now.getFullYear();
+      const chileTime = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Santiago",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(new Date());
 
-      // Obtener todas las reservas del mes actual
+      const [month, day, year] = chileTime.split('/');
+      const currentMonth = parseInt(month);
+      const currentDay = parseInt(day);
+      const currentYear = parseInt(year);
+
+      const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
+      const nextYear = currentMonth === 12 ? currentYear + 1 : currentYear;
+
       const reservations = await prisma.reservation.findMany({
         where: {
           createdAt: {
             gte: new Date(`${currentYear}-${currentMonth}-01T00:00:00.000Z`),
-            lt: new Date(`${currentYear}-${currentMonth + 1}-01T00:00:00.000Z`),
+            lt: new Date(`${nextYear}-${nextMonth}-01T00:00:00.000Z`),
           },
         },
       });
 
-      // Agrupar las reservas por día
       const dayCounts = {};
       reservations.forEach((reservation) => {
         const day = new Date(reservation.createdAt).getDate();
         dayCounts[day] = (dayCounts[day] || 0) + 1;
       });
 
-      // Obtener las reservas para el día actual
       const reservationsToday = reservations.filter(
         (reservation) => new Date(reservation.createdAt).getDate() === currentDay
       );
 
       const hourCountsToday = {};
       reservationsToday.forEach((reservation) => {
-        const hour = parseInt(reservation.time.split(':')[0]); // Hora de la columna 'time'
+        const hour = parseInt(reservation.time.split(':')[0]);
         hourCountsToday[hour] = (hourCountsToday[hour] || 0) + 1;
       });
 
-      // Formatear respuesta
       const labelsDays = Object.keys(dayCounts).map((day) => `Día ${day}`);
       const dataDays = Object.values(dayCounts);
       const labelsHoursToday = Object.keys(hourCountsToday).map((hour) => `${hour}:00`);
@@ -61,4 +65,3 @@ export default async function handler(req, res) {
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
-
