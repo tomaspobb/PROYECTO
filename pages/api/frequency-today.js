@@ -6,32 +6,37 @@ export default async function handler(req, res) {
   }
 
   try {
-    const now = new Date();
-    const chileTime = new Date(now.getTime() - 3 * 60 * 60 * 1000);
+    // Obtener la fecha actual en la zona horaria de Chile
+    const chileNow = new Date().toLocaleString('en-US', { timeZone: 'America/Santiago' });
+    const now = new Date(chileNow);
 
-    const startOfDay = new Date(chileTime.getFullYear(), chileTime.getMonth(), chileTime.getDate());
-    const endOfDay = new Date(startOfDay);
-    endOfDay.setDate(startOfDay.getDate() + 1);
+    // Ajustar para el inicio del día y el inicio del siguiente día en la zona horaria de Chile
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+    const tomorrowStart = new Date(todayStart);
+    tomorrowStart.setDate(todayStart.getDate() + 1);
 
+    // Obtener reservas del día actual
     const reservationsToday = await prisma.reservation.findMany({
       where: {
         createdAt: {
-          gte: startOfDay,
-          lt: endOfDay,
+          gte: todayStart,
+          lt: tomorrowStart,
         },
       },
     });
 
+    // Procesar las reservas agrupándolas por hora
     const todayData = reservationsToday.reduce((acc, reservation) => {
-      const hour = reservation.time;
-      acc[hour] = (acc[hour] || 0) + 1;
+      const hour = reservation.time; // Usar el campo "time" directamente
+      acc[hour] = (acc[hour] || 0) + 1; // Sumar reservas por hora
       return acc;
     }, {});
 
+    // Formatear los datos para enviarlos al frontend
     const todayProcessed = Object.keys(todayData)
-      .sort()
+      .sort((a, b) => a - b)
       .map(hour => ({
-        hour: `${hour}:00`,
+        hour: `${hour.padStart(2, '0')}:00`,
         count: todayData[hour],
       }));
 
