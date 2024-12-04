@@ -109,7 +109,17 @@
   "voteSubmitted": "Your vote has been registered!",
   "voteError": "There was an error submitting your vote. Please try again.",
   "selectDish": "Select a dish",
-  "submitVote": "Submit Vote"
-  
+  "submitVote": "Submit Vote",
+  "reservationsToday": "Reservations Today",
+  "reservationsThisMonth": "Reservations This Month",
+  "noDataToday": "No data for today.",
+  "noDataThisMonth": "No data for this month.",
+  "loading": "Loading data...",
+  "reservationsBySpecificDay": "Reservations by Specific Day",
+  "noDataSpecificDate": "No data for the selected day.",
+  "reservationsByDayOfWeek": "Reservations by Day of the Week",
+  "loadingToday": "Loading today's data...",
+  "loadingWeek": "Loading week's data...",
+  "noDataThisWeek": "No reservations for this week."
 }
 
