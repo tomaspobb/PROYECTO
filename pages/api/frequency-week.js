@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     }, {});
 
     const weekProcessed = [1, 2, 3, 4, 5].map(day => ({
-      day: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'][day - 1],
+      day: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'][day - 1], // Generar claves genéricas
       count: weekData[day] || 0,
     }));
 

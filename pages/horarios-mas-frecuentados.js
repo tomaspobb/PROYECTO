@@ -15,9 +15,10 @@ export const getStaticProps = async ({ locale }) => ({
 Chart.register(BarElement, CategoryScale, LinearScale, Title, Tooltip);
 
 const HorariosMasFrecuentados = () => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [todayData, setTodayData] = useState([]);
   const [weekData, setWeekData] = useState([]);
+  const [weekChart, setWeekChart] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,6 +39,24 @@ const HorariosMasFrecuentados = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (weekData.length > 0) {
+      const updatedLabels = weekData.map(item => t(item.day)); // Traducir días al cambiar idioma
+      setWeekChart({
+        labels: updatedLabels,
+        datasets: [
+          {
+            label: t('reservationsByDayOfWeek'),
+            data: weekData.map(item => item.count),
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          },
+        ],
+      });
+    }
+  }, [i18n.language, weekData]);
+
   const todayChart = {
     labels: todayData.map(item => item.hour),
     datasets: [
@@ -46,19 +65,6 @@ const HorariosMasFrecuentados = () => {
         data: todayData.map(item => item.count),
         backgroundColor: 'rgba(255, 99, 132, 0.6)',
         borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const weekChart = {
-    labels: weekData.map(item => item.day),
-    datasets: [
-      {
-        label: t('reservationsByDayOfWeek'),
-        data: weekData.map(item => item.count),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
       },
     ],
@@ -86,7 +92,7 @@ const HorariosMasFrecuentados = () => {
 
           <div className="mb-5">
             <h3 className="text-center">{t('reservationsByDayOfWeek')}</h3>
-            <Bar data={weekChart} />
+            {weekChart && <Bar data={weekChart} />}
           </div>
         </>
       )}

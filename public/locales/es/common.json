@@ -120,6 +120,12 @@
   "reservationsByDayOfWeek": "Reservas por Día de la Semana",
   "loadingWeek": "Cargando datos de la semana...",
   "noDataThisWeek": "No hay reservas para esta semana.",
-  "loadingToday": "Cargando datos de hoy..."
+  "loadingToday": "Cargando datos de hoy...",
+  "monday": "Lunes",
+  "tuesday": "Martes",
+  "wednesday": "Miércoles",
+  "thursday": "Jueves",
+  "friday": "Viernes"
+  
 }
-
+  

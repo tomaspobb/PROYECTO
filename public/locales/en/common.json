@@ -120,6 +120,11 @@
   "reservationsByDayOfWeek": "Reservations by Day of the Week",
   "loadingToday": "Loading today's data...",
   "loadingWeek": "Loading week's data...",
-  "noDataThisWeek": "No reservations for this week."
+  "noDataThisWeek": "No reservations for this week.",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday"
 }
 
