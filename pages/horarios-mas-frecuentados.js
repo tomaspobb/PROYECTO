@@ -71,32 +71,39 @@ const HorariosMasFrecuentados = () => {
   };
 
   return (
-    <div className="container py-5">
-      <h1 className="text-center">{t('mostFrequentedTimes')}</h1>
-      <div className="d-flex justify-content-center mb-4">
-        <Link href="/reservas">
-          <button className="btn btn-primary">{t('backToReservations')}</button>
-        </Link>
+    <>
+      <div className="container py-5">
+        <h1 className="text-center">{t('mostFrequentedTimes')}</h1>
+        <div className="d-flex justify-content-center mb-4">
+          <Link href="/reservas">
+            <button className="btn btn-primary">{t('backToReservations')}</button>
+          </Link>
+        </div>
+
+        {loading ? (
+          <div className="text-center">
+            <p>{t('loading')}</p>
+          </div>
+        ) : (
+          <>
+            <div className="mb-5">
+              <h3 className="text-center">{t('reservationsToday')}</h3>
+              <Bar data={todayChart} />
+            </div>
+
+            <div className="mb-5">
+              <h3 className="text-center">{t('reservationsByDayOfWeek')}</h3>
+              {weekChart && <Bar data={weekChart} />}
+            </div>
+          </>
+        )}
       </div>
 
-      {loading ? (
-        <div className="text-center">
-          <p>{t('loading')}</p>
-        </div>
-      ) : (
-        <>
-          <div className="mb-5">
-            <h3 className="text-center">{t('reservationsToday')}</h3>
-            <Bar data={todayChart} />
-          </div>
-
-          <div className="mb-5">
-            <h3 className="text-center">{t('reservationsByDayOfWeek')}</h3>
-            {weekChart && <Bar data={weekChart} />}
-          </div>
-        </>
-      )}
-    </div>
+      {/* Footer oscuro expandido */}
+      <footer className="text-center py-4 bg-dark text-light w-100">
+        <p>© {new Date().getFullYear()} {t('restaurantName')}. {t('allRightsReserved')}</p>
+      </footer>
+    </>
   );
 };
 
